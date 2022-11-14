@@ -335,4 +335,4 @@ service squid restart
 
 
 ### Kendala Pengerjaan
-
+Terkadang akses website tidak berjalan sesuai aturan pembatasan.
