@@ -215,7 +215,17 @@ http_access deny all
 service squid restart
 ```
 
-- Pada client, dapat dicoba mengetes dengan berbagai variasi menggunakan format ```date -s "YYYY-MM-DD hh:mm:ss"``` (diisi sesuai urutan tahun, bulan, tanggal, jam, menit, dan detik).
+- Pada client, dapat dicoba mengetes dengan berbagai variasi menggunakan format ```date -s "YYYY-MM-DD hh:mm:ss"``` (diisi sesuai urutan tahun, bulan, tanggal, jam, menit, dan detik). 
+
+- Ketika diset pada hari kerja: </br>
+![8 1 test1](https://user-images.githubusercontent.com/72701806/201685310-2c43a28e-3832-461b-ac86-53bd69af6aa0.png)
+</br>
+</br>
+
+- Setelah diset diluar hari kerja: </br>
+![8 1 test3](https://user-images.githubusercontent.com/72701806/201685749-fe5d8474-9ec3-4b00-a990-feccc07987f0.png)
+</br>
+</br>
 
 ### NOMOR 8.2
 2. Adapun pada hari dan jam kerja sesuai nomor (1), client hanya dapat mengakses domain loid-work.com dan franky-work.com (IP tujuan domain dibebaskan)
