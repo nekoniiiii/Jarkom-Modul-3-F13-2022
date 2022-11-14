@@ -77,11 +77,10 @@ acl SSL_ports port 443
 
 - Kemudian ubah beberapa baris sebelumnya menjadi konfigurasi berikut pada file ```/etc/squid/squid.conf```
 ```
-http_access allow CONNECT AVAILABLE_WORKING_1 SSL_ports
-http_access allow CONNECT AVAILABLE_WORKING_2 SSL_ports
-http_access allow CONNECT AVAILABLE_WORKING_3 SSL_ports
+http_access allow CONNECT AVAILABLE_WORKING SSL_ports
+http_access allow CONNECT AVAILABLE_WORKING1 SSL_ports
+http_access allow CONNECT AVAILABLE_WORKING2 SSL_ports
 ```
-![8 3 (2)](https://user-images.githubusercontent.com/72701806/201578256-08060835-65fa-4ad0-b3aa-4f2d4ad198f7.png)
 </br>
 
 - Kemudian restart squid
