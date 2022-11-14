@@ -35,9 +35,9 @@ INTERFACES="eth0"
 
 Setelah itu, restart dhcp dengan ```service isc-dhcp-server restart```
 
-#### Ostania
+#### Berlint
 
-Masukkan line dibawah ke web console Ostania :
+Masukkan line dibawah ke web console Berlint :
 ```
 apt-get update
 apt-get install squid
