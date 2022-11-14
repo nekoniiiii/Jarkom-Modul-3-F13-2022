@@ -8,13 +8,63 @@
 
 ## NOMOR 1
 
+Loid bersama Franky berencana membuat peta tersebut dengan kriteria WISE sebagai DNS Server, Westalis sebagai DHCP Server, Berlint sebagai Proxy Server.
+
 ### Penyelesaian
 
+#### WISE
+
+Masukkan line dibawah ke web console WISE :
+```
+apt-get update
+apt-get install bind9
+```
+
+#### Westalis
+
+Masukkan line dibawah ke web console Westalis :
+```
+apt-get update
+apt-get install isc-dhcp-server
+```
+
+Kemudian, edit ```/etc/default/isc-dhcp-server```
+```
+INTERFACES="eth0"
+```
+
+Setelah itu, restart dhcp dengan ```service isc-dhcp-server restart```
+
+#### Ostania
+
+Masukkan line dibawah ke web console Ostania :
+```
+apt-get update
+apt-get install squid
+```
 
 ## NOMOR 2
 
+Ostania sebagai DHCP Relay.
+
 ### Penyelesaian
 
+#### Ostania
+
+Masukkan line dibawah ke web console Ostania :
+```
+apt-get update
+apt-get install isc-dhcp-relay
+```
+
+Kemudian, edit ```/etc/default/isc-dhcp-relay```
+```
+SERVERS="10.35.2.4"
+INTERFACES="eth1 eth2 eth3"
+OPTIONS=""
+```
+
+Restart dhcp relay dengan ```service isc-dhcp-relay restart```
 
 ## NOMOR 8
 SSS, Garden, dan Eden digunakan sebagai client Proxy agar pertukaran informasi dapat terjamin keamanannya, juga untuk mencegah kebocoran data. </br>
