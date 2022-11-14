@@ -152,7 +152,7 @@ Lama waktu DHCP server meminjamkan alamat IP kepada Client yang melalui Switch1 
 
 ### Penyelesaian
 [Westalis]
-- Edit file``` /etc/dhcp/dhcpd.conf``` pada Westalis sebagai berikut
+- Edit file ```/etc/dhcp/dhcpd.conf``` pada Westalis sebagai berikut
 ```
 # Pada subnet Switch 1 tambahkan
     default-lease-time 300;
@@ -170,7 +170,6 @@ service isc-dhcp-server restart
 Loid dan Franky berencana menjadikan Eden sebagai server untuk pertukaran informasi dengan alamat IP yang tetap dengan IP [prefix IP].3.13
 
 ### Penyelesaian
-[Westalis]
 - Pada Westalis, edit file ```/etc/dhcp/dhcpd.conf``` dan tambahkan line berikut
 ```
 host Eden { 
@@ -197,6 +196,8 @@ acl AVAILABLE_WORKING time MTWHF 00:00-08:00
 acl AVAILABLE_WORKING1 time MTWHF 17:00-24:00
 acl AVAILABLE_WORKING2 time AS 00:00-24:00
 ```
+![8 1 (1)](https://user-images.githubusercontent.com/72701806/201671492-afb1a843-fb7f-4284-8422-79bd165e896f.png)
+</br>
 
 - Dan konfigurasi berikut pada file ```/etc/squid/squid.conf```
 ```
@@ -206,11 +207,15 @@ http_access allow AVAILABLE_WORKING1 USERS
 http_access allow AVAILABLE_WORKING2 USERS
 http_access deny all
 ```
+![8 1 (2)](https://user-images.githubusercontent.com/72701806/201671562-d7cbd611-a649-4ce6-bf41-ea36d8d99776.png)
+</br>
 
 - Kemudian restart squid
 ```
 service squid restart
 ```
+
+- Pada client, dapat dicoba mengetes dengan berbagai variasi menggunakan format ```date -s "YYYY-MM-DD hh:mm:ss"``` (diisi sesuai urutan tahun, bulan, tanggal, jam, menit, dan detik).
 
 ### NOMOR 8.2
 2. Adapun pada hari dan jam kerja sesuai nomor (1), client hanya dapat mengakses domain loid-work.com dan franky-work.com (IP tujuan domain dibebaskan)
@@ -247,11 +252,18 @@ http_access allow CONNECT AVAILABLE_WORKING SSL_ports
 http_access allow CONNECT AVAILABLE_WORKING1 SSL_ports
 http_access allow CONNECT AVAILABLE_WORKING2 SSL_ports
 ```
+![8 3 (2)](https://user-images.githubusercontent.com/72701806/201671668-89107707-12f1-4e36-abbb-2f16bd7655f2.png)
 </br>
 
 - Kemudian restart squid
 ```
 service squid restart
+```
+
+- Pada client, dicoba untuk mengakses dua website (http dan https), contohnya
+```
+lynx http://example.com
+lynx https://its.ac.id
 ```
 
 ### NOMOR 8.4
