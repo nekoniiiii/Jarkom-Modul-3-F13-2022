@@ -66,6 +66,122 @@ OPTIONS=""
 
 Restart dhcp relay dengan ```service isc-dhcp-relay restart```
 
+## NOMOR 3
+Client yang melalui Switch1 mendapatkan range IP dari [prefix IP].1.50 - [prefix IP].1.88 dan [prefix IP].1.120 - [prefix IP].1.155
+### Penyelesaian
+[Westalis]
+- Pada Westalis, edit file ```/etc/dhcp/dhcpd.conf``` dan tambahkan line berikut
+```
+subnet 10.35.2.0 netmask 255.255.255.0 {
+        option routers 10.35.2.1;
+}
+
+subnet 10.35.1.0 netmask 255.255.255.0 {
+    range 10.35.1.50 10.35.1.88;
+    range 10.35.1.120 10.35.1.155;
+    option routers 10.35.1.1;
+    option broadcast-address 10.35.1.255;
+    option domain-name-servers 10.35.2.2;
+}
+```
+- Restart
+```
+service isc-dhcp-server restart
+```
+## NOMOR 4
+Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.10 - [prefix IP].3.30 dan [prefix IP].3.60 - [prefix IP].3.85
+
+### Penyelesaian
+- Pada Westalis, edit file ```/etc/dhcp/dhcpd.conf``` dan tambahkan line berikut
+```
+subnet 10.35.3.0 netmask 255.255.255.0 {
+    range 10.35.3.10 10.35.3.30;
+    range 10.35.3.60 10.35.3.85;
+    option routers 10.35.3.1;
+    option broadcast-address 10.35.3.255;
+    option domain-name-servers 10.35.2.2;
+}
+```
+- Restart
+```
+service isc-dhcp-server restart
+```
+Testing pada soal no 3 dan 4 apakah masing-masing client telah mendapatkan IP setelah semua client di setting IP dinamisnya dari DHCP Server dengan command ip a pada masing-masing client. <br>
+
+SSS <br>
+![image](https://user-images.githubusercontent.com/91374949/200805913-07510418-7d71-46d3-9e0a-528014c998df.png)
+<br>Garden<br>
+![image](https://user-images.githubusercontent.com/91374949/200806002-0106a6c5-582c-48ea-abf4-41f0ef904b44.png)
+<br>Eden<br>
+![image](https://user-images.githubusercontent.com/91374949/200806212-b4740cef-3c7d-4aa5-a01e-c05cdadbce74.png)
+<br>NewstonCastle<br>
+![image](https://user-images.githubusercontent.com/91374949/200806329-24fa3e68-9e08-4114-949d-fc5104b086ee.png)
+<br>KemonoPark<br>
+![image](https://user-images.githubusercontent.com/91374949/200806424-b0d21a48-e063-43b6-9b7d-10f7349ed719.png) 
+
+## NOMOR 5
+Client mendapatkan DNS dari WISE dan client dapat terhubung dengan internet melalui DNS tersebut
+### Penyelesaian
+[WISE]
+- Edit file ```/etc/bind/named.conf.options``` pada WISE sebagai berikut
+```
+forwarders {
+  192.168.122.1;
+};
+// dnssec-validation auto;
+allow-query{any;};
+```
+![image](https://user-images.githubusercontent.com/91374949/200804114-466f392c-3b92-4d2e-8df8-3dd64915eca3.png)
+
+- Restart bind9 ```service bind9 restart```
+
+Untuk mengeceknya, maka dapat menjalankan command cat /etc/resolv.conf pada masing-masing client. <br>
+SSS<br>
+![image](https://user-images.githubusercontent.com/91374949/200807044-a42ac087-3f69-4c8e-b85b-ed6c0fe8f980.png)
+<br>Garden<br>
+![image](https://user-images.githubusercontent.com/91374949/200807121-19f2cb8f-f726-4512-8450-0658e039a1bc.png)
+<br>Eden<br>
+![image](https://user-images.githubusercontent.com/91374949/200806970-4c356eef-706d-4e66-a24b-dcf5af0c1f31.png)
+<br>NewstonCastle<br>
+![image](https://user-images.githubusercontent.com/91374949/200806908-eec0774d-15cd-4e51-91d2-13cc436e3ad3.png)
+<br>KemonoPark<br>
+![image](https://user-images.githubusercontent.com/91374949/200806842-aeb1991e-165a-4f7f-b68e-b482a323aa36.png)
+
+## NOMOR 6
+Lama waktu DHCP server meminjamkan alamat IP kepada Client yang melalui Switch1 selama 5 menit sedangkan pada client yang melalui Switch3 selama 10 menit. Dengan waktu maksimal yang dialokasikan untuk peminjaman alamat IP selama 115 menit.
+
+### Penyelesaian
+[Westalis]
+- Edit file``` /etc/dhcp/dhcpd.conf``` pada Westalis sebagai berikut
+```
+# Pada subnet Switch 1 tambahkan
+    default-lease-time 300;
+    max-lease-time 6900;
+    
+# Pada subnet Switch 3 tambahkan
+    default-lease-time 600;
+    max-lease-time 6900;
+```
+- Restart
+```
+service isc-dhcp-server restart
+```
+## NOMOR 7
+Loid dan Franky berencana menjadikan Eden sebagai server untuk pertukaran informasi dengan alamat IP yang tetap dengan IP [prefix IP].3.13
+
+### Penyelesaian
+[Westalis]
+- Pada Westalis, edit file ```/etc/dhcp/dhcpd.conf``` dan tambahkan line berikut
+```
+host Eden { 
+        hardware ethernet 82:f8:21:de:6b:8f;
+        fixed-address 10.35.3.13;
+}
+```
+- Restart ```service isc-dhcp-server restart```
+- Kemudian cek alamat IP pada Eden
+![image](https://user-images.githubusercontent.com/91374949/200806212-b4740cef-3c7d-4aa5-a01e-c05cdadbce74.png)<br>
+
 ## NOMOR 8
 SSS, Garden, dan Eden digunakan sebagai client Proxy agar pertukaran informasi dapat terjamin keamanannya, juga untuk mencegah kebocoran data. </br>
 
