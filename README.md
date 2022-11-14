@@ -135,7 +135,7 @@ kecepatan hanya diberlakukan untuk pengaksesan internet pada hari libur
 
 - Kemudian ubah konfigurasi delay_access pada file ```/etc/squid/acl-bandwidth.conf``` sehingga pembatasan bandwidth hanya dapat bekerja
 ```
-delay_access 1 allow WEEKEND_TIME
+delay_access 1 allow WEEKEND
 ```
 ![8 5 (2)](https://user-images.githubusercontent.com/72701806/201578393-7f09cafd-771a-4517-8c7a-c2e63c77e2e0.png)
 </br>
